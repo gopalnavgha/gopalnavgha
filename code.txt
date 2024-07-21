@@ -1,0 +1,32 @@
+It seems like Git is asking you to configure your user name and email address before you can make a commit. This is necessary for Git to record who made each commit in its version history.
+
+To solve this issue, follow these steps:
+
+1. **Set Your User Name and Email:**
+   - Open Git Bash (the terminal where you're seeing this message).
+   - Use the following commands to set your user name and email address:
+     ```
+     git config --global user.name "Your Name"
+     git config --global user.email "you@example.com"
+     ```
+   - Replace `"Your Name"` with your actual name and `"you@example.com"` with your email address that you want to associate with your Git commits.
+
+   Explanation:
+   - `git config --global`: This sets the configuration globally for your user account. This means Git will use these settings for all repositories unless overridden locally in a specific repository.
+   - `user.name`: This is your Git username.
+   - `user.email`: This is the email address associated with your Git commits.
+
+2. **Retry Your Commit:**
+   - After setting your name and email, retry your commit command:
+     ```
+     git commit -m "new file added"
+     ```
+
+3. **Verify Your Configuration:**
+   - You can verify that your settings are correct by checking the global Git configuration:
+     ```
+     git config --global --list
+     ```
+   - This command will show your global Git configuration, including your user name and email.
+
+By setting your user name and email address, Git will now be able to properly identify you as the author of the commit, and you should not encounter the "Author identity unknown" error anymore.
