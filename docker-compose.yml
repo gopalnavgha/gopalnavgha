@@ -1,0 +1,41 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:8
+    ports:
+      - '8888:3306'
+    environment:
+      MYSQL_DATABASE : bikes
+      MYSQL_ROOT_PASSWORD : root
+    volumes:
+      - ./app:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost","-uroot","-proot" ]
+      interval: 10s
+      timeout: 20s
+      retries: 3
+
+  web:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /code
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - DBNAME=bikes
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_HOST =mysql
+      - DB_PORT =3306
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
+
